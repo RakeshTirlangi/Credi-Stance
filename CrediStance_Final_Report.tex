@@ -59,7 +59,7 @@ Stance detection assigns \textsc{favor}, \textsc{against} or \textsc{none} to a 
 Given a text $x$ and a target $t$, predict $y\in\mathcal{Y}=\{\textsc{favor},\textsc{against},\textsc{none}\}$ \cite{mohammad2016,kucuk2020}.
 
 \subsection{What is wrong with a single probability vector}
-A classifier returns $p(y\mid x,t)\in\Delta_3$. Two different situations produce the same vector (Table~\ref{tab:two}). SemEval-2016 itself quantifies the first: the organisers dropped 1{,}385 tweets from the shared task because annotator agreement fell below 60\% \cite{mohammad2017}; VAST reports Krippendorff's $\alpha=0.427$ \cite{allaway2020}. A single vector offers no basis for choosing between ``contested'' and ``unknown''.
+A classifier returns $p(y\mid x,t)\in\Delta_3$. Two different situations produce the same vector (Table~\ref{tab:two}, Figure~\ref{fig:samevec}). SemEval-2016 itself quantifies the first: the organisers dropped 1{,}385 tweets from the shared task because annotator agreement fell below 60\% \cite{mohammad2017}; VAST reports Krippendorff's $\alpha=0.427$ \cite{allaway2020}. A single vector offers no basis for choosing between ``contested'' and ``unknown''.
 
 \begin{table}[h]
 \centering\small
@@ -74,6 +74,13 @@ Situation & Example & Right action \\
 \caption{Two sources of uncertainty that a single probability vector conflates.}
 \label{tab:two}
 \end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{results/fig/arch/same_vector.png}
+\caption{Two very different situations, one identical softmax output. Neither ``flag as contested'' nor ``defer and collect labels'' can be justified from the vector alone.}
+\label{fig:samevec}
+\end{figure}
 
 \subsection{Problem statement}
 \begin{quote}
@@ -103,34 +110,36 @@ With Shannon entropy $H$ in bits, the standard measures are \cite{abellan2006,hu
 \TU=\up{H}=\max_{p\in\credal}H(p),\qquad \AU=\lo{H}=\min_{p\in\credal}H(p),\qquad \EU=\up{H}-\lo{H}.
 \label{eq:dec}
 \end{equation}
-A \emph{small} set around a spread-out distribution is ``confident that the text is ambiguous'' (high AU, low EU); a \emph{large} set is ``do not know which distribution is right'' (high EU); Figure~\ref{fig:simplex}. Sale et al.\ \cite{sale2023} show that the set's volume is a sound epistemic measure only for binary problems; Gonzalez-Garcia et al.\ \cite{gonzalez2026} propose distance-based multiclass measures, of which the interval width $\sum_k(u_k-l_k)$ is the simplest proxy. We report both the entropy decomposition and the width.
+A \emph{small} set around a spread-out distribution is ``confident that the text is ambiguous'' (high AU, low EU); a \emph{large} set is ``do not know which distribution is right'' (high EU); Figures~\ref{fig:credalintro}--\ref{fig:decomp}. Sale et al.\ \cite{sale2023} show that the set's volume is a sound epistemic measure only for binary problems; Gonzalez-Garcia et al.\ \cite{gonzalez2026} propose distance-based multiclass measures, of which the interval width $\sum_k(u_k-l_k)$ is the simplest proxy. We report both the entropy decomposition and the width.
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}[scale=0.9]
-  \begin{scope}
-    \draw[thick] (0,0) -- (4,0) -- (2,3.46) -- cycle;
-    \node[below left,font=\footnotesize] at (0,0) {\textsc{against}};
-    \node[below right,font=\footnotesize] at (4,0) {\textsc{favor}};
-    \node[above,font=\footnotesize] at (2,3.46) {\textsc{none}};
-    \fill[blue!30,draw=blue!70,thick] (1.85,1.0) -- (2.2,1.0) -- (2.2,1.3) -- (1.85,1.3) -- cycle;
-    \node[font=\footnotesize,align=center] at (2,-0.9) {small set, spread centre:\\ambiguous (high AU, low EU)};
-  \end{scope}
-  \begin{scope}[shift={(7,0)}]
-    \draw[thick] (0,0) -- (4,0) -- (2,3.46) -- cycle;
-    \node[below left,font=\footnotesize] at (0,0) {\textsc{against}};
-    \node[below right,font=\footnotesize] at (4,0) {\textsc{favor}};
-    \node[above,font=\footnotesize] at (2,3.46) {\textsc{none}};
-    \fill[red!25,draw=red!70,thick] (0.9,0.4) -- (3.1,0.4) -- (2.6,2.0) -- (1.4,2.0) -- cycle;
-    \node[font=\footnotesize,align=center] at (2,-0.9) {large set:\\unfamiliar (high EU)};
-  \end{scope}
-\end{tikzpicture}
-\caption{Two credal sets on the stance simplex. Left: the model is confident that the distribution is spread between \textsc{favor} and \textsc{against}. Right: the model cannot narrow the distribution down.}
+\includegraphics[width=\textwidth]{results/fig/arch/credal_intro.png}
+\caption{From a point to a set. Left: softmax returns one point on the stance simplex. Right: the ensemble members (dots) span a probability-interval credal set whose class-wise bounds $l_k=\min_m p_{m,k}$, $u_k=\max_m p_{m,k}$ are shown on the far right; the gold dot is the intersection probability $p^*$.}
+\label{fig:credalintro}
+\end{figure}
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.92\textwidth]{results/fig/arch/ambiguity_vs_ignorance.png}
+\caption{Location encodes ambiguity, size encodes ignorance. Both sets share the same point prediction. Left: a small set near the centre, the model is confident that the item is contested (high AU, low EU). Right: a large set, the model does not know which distribution is right (high EU).}
 \label{fig:simplex}
+\end{figure}
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.7\textwidth]{results/fig/arch/decomposition.png}
+\caption{Measuring a credal set. $\up H$ is attained by the most spread-out distribution in the set, $\lo H$ by the most peaked one; $\EU=\up H-\lo H$. The interval width $\sum_k(u_k-l_k)$ is an entropy-free size proxy.}
+\label{fig:decomp}
 \end{figure}
 
 \subsection{Classical versus modern credal models}
-The claim that ``credal networks only work on tabular data'' is true of classical credal networks \cite{cozman2000} and the naive credal classifier \cite{corani2008}, which place imprecise probability tables inside a graphical model over few discrete variables. Modern credal deep learning places the credal set \emph{at the output} of a neural network \cite{wang2025wrapper,wang2024crede,wang2025creinn,javanmardi2024,lohr2025,hofman2026,credro2026,manchingal2026}; the encoder handles the raw text. Credal sets have been evaluated on ChaosNLI, an NLI benchmark with $\sim$100 annotators per item \cite{javanmardi2024,hofman2026}, and on LLMs via LoRA ensembles \cite{manchingal2026}. Stance detection has the same structure as NLI (a text pair, three classes, high human disagreement); EZ-Stance even reformulates zero-shot stance as NLI \cite{zhao2024}.
+The claim that ``credal networks only work on tabular data'' is true of classical credal networks \cite{cozman2000} and the naive credal classifier \cite{corani2008}, which place imprecise probability tables inside a graphical model over few discrete variables. Modern credal deep learning places the credal set \emph{at the output} of a neural network \cite{wang2025wrapper,wang2024crede,wang2025creinn,javanmardi2024,lohr2025,hofman2026,credro2026,manchingal2026}; the encoder handles the raw text. Credal sets have been evaluated on ChaosNLI, an NLI benchmark with $\sim$100 annotators per item \cite{javanmardi2024,hofman2026}, and on LLMs via LoRA ensembles \cite{manchingal2026}. Stance detection has the same structure as NLI (a text pair, three classes, high human disagreement); EZ-Stance even reformulates zero-shot stance as NLI \cite{zhao2024}. Figure~\ref{fig:classical} contrasts the two families.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{results/fig/arch/classical_vs_modern.png}
+\caption{Classical credal networks keep imprecise probability tables inside a graphical model over discrete variables, which restricts them to tabular inputs and exponential exact inference. Modern credal deep learning builds the set from the probability vectors a neural encoder produces, so raw text is handled by the encoder.}
+\label{fig:classical}
+\end{figure}
 
 % =====================================================================
 \section{Alternative Credal Architectures Considered}
@@ -167,36 +176,42 @@ Zero-shot Qwen2.5-3B-Instruct with 8 system/instruction paraphrases; class proba
 \subsection{Proposed: human-distribution-supervised robust credal ensemble (CreDRO-Soft)}
 Two deficiencies motivate the proposal. First, A1--A5 are trained on \textbf{hard labels}: nothing in the training signal says how \emph{contested} an item is, so the lower entropy of the resulting credal set is an artefact of the backbone rather than a model of human disagreement. Second, seed/bootstrap diversity is incidental: members disagree where they happen to, not where the data is shifted.
 
-CreDRO-Soft trains CreDRO members against the \textbf{empirical human label distribution} $\lambda_x$ wherever per-annotator votes exist (SemEval released $\approx8$ votes per tweet), i.e.\ the per-sample loss is $-\sum_k\lambda_{x,k}\log p_k$, and keeps the CVaR-DRO member diversity. The intended division of labour is: \emph{location} of the credal set $\leftarrow$ human disagreement (every member is pulled towards $\lambda_x$, so $\lo{H}$ tracks human entropy); \emph{size} of the credal set $\leftarrow$ distributional robustness (members with small $\delta$ concentrate on the hardest tail, members with $\delta=1$ fit everything; they diverge most on items unlike the training distribution). The two ingredients are also evaluated separately (CreWrap-Soft, CreDRO), giving a $2\times2$ ablation.
+CreDRO-Soft trains CreDRO members against the \textbf{empirical human label distribution} $\lambda_x$ wherever per-annotator votes exist (SemEval released $\approx8$ votes per tweet), i.e.\ the per-sample loss is $-\sum_k\lambda_{x,k}\log p_k$, and keeps the CVaR-DRO member diversity. The intended division of labour is: \emph{location} of the credal set $\leftarrow$ human disagreement (every member is pulled towards $\lambda_x$, so $\lo{H}$ tracks human entropy); \emph{size} of the credal set $\leftarrow$ distributional robustness (members with small $\delta$ concentrate on the hardest tail, members with $\delta=1$ fit everything; they diverge most on items unlike the training distribution). The two ingredients are also evaluated separately (CreWrap-Soft, CreDRO), giving a $2\times2$ ablation. Figure~\ref{fig:credrosoft} summarises the construction.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{results/fig/arch/credro_soft.png}
+\caption{CreDRO-Soft. (1) Released per-annotator votes become a human label distribution $\lambda_x$ that every member is trained towards; this sets the \emph{location} of the credal set. (2) Members differ only in the CVaR-DRO fraction $\delta_i$ of each batch that receives gradient; this sets the \emph{size} of the set, because members diverge most on items unlike the training distribution.}
+\label{fig:credrosoft}
+\end{figure}
 
 \subsection{Calibration and decision layers (shared)}
 \textbf{Conformal credal calibration} \cite{javanmardi2024,angelopoulos2023}: non-conformity $s_i=\TV(\lambda_i,g(x_i))=\tfrac12\sum_k|\lambda_{i,k}-g_k(x_i)|$ on the held-out calibration split, quantile $\hat q$ at level $1-\alpha$, calibrated set $\{\lambda:\TV(\lambda,g(x))\le\hat q\}$ with bounds $[g_k-\hat q,\,g_k+\hat q]$; $P(\lambda_x\in\hat\credal(x))\ge1-\alpha$ under exchangeability. We add a \emph{credal-dilation} variant whose score is the distance of $\lambda$ to the predicted box (zero if inside).
-\textbf{Interval dominance} \cite{troffaes2007}: $\ND(x)=\{k:u_k\ge\max_j l_j\}$; one non-dominated class $\to$ predict; several and low EU $\to$ set-valued answer; high EU $\to$ defer.
+\textbf{Interval dominance} \cite{troffaes2007}: $\ND(x)=\{k:u_k\ge\max_j l_j\}$; one non-dominated class $\to$ predict; several and low EU $\to$ set-valued answer; high EU $\to$ defer (Figure~\ref{fig:decision}).
+
+\begin{figure}[t]
+\centering
+\begin{minipage}[c]{0.40\textwidth}\centering\includegraphics[width=\textwidth]{results/fig/arch/conformal.png}\end{minipage}\hfill
+\begin{minipage}[c]{0.57\textwidth}\centering\includegraphics[width=\textwidth]{results/fig/arch/dominance.png}\end{minipage}
+\caption{Left: conformal credal calibration by box dilation. The score of a calibration item is the distance of its $\lambda$ to the predicted box; the $(1-\alpha)$ quantile $\hat q$ dilates the box at test time (dashed), giving $P(\lambda_x\in\hat\credal(x))\ge1-\alpha$ under exchangeability. Right: interval dominance. A class is non-dominated when its upper probability reaches the largest lower probability (dashed line); one class $\to$ predict, several with low EU $\to$ set-valued answer, several with high EU $\to$ defer.}
+\label{fig:decision}
+\end{figure}
 
 % =====================================================================
 \section{System Architecture}
 % =====================================================================
 
-\begin{figure}[h]
+\begin{figure}[t]
 \centering
-\begin{tikzpicture}[node distance=0.5cm and 0.8cm]
-  \node[data] (bench) {Benchmarks\\SemEval-16, P-Stance, COVID-19};
-  \node[data, right=of bench] (hlv) {Human label distributions $\lambda_x$\\(SemEval-16 raw votes)};
-  \node[wide, below=0.6cm of $(bench.south)!0.5!(hlv.south)$] (ens) {DeBERTa-v3-base, $M$ members:\\CE $|$ soft $|$ DRO $|$ soft+DRO $|$ CreNet interval head};
-  \node[wide, below=of ens] (cred) {Credal layer: $l=\min_m p_m$, $u=\max_m p_m$ $\to$ reachable$(l,u)$ $\to$ $p^*$};
-  \node[block, below left=0.7cm and 0.3cm of cred.south] (dec) {Decomposition\\$\TU=\up H$, $\AU=\lo H$,\\$\EU=\up H-\lo H$, width};
-  \node[block, below right=0.7cm and 0.3cm of cred.south] (conf) {Conformal calibration\\$\hat q$ on cal votes\\$[g-\hat q,\,g+\hat q]$};
-  \node[wide, below=0.7cm of $(dec.south)!0.5!(conf.south)$] (route) {Interval dominance $\ND(x)$ $\to$ predict / set-valued / defer};
-  \draw[arrow] (bench.south) -- ++(0,-0.3) -| (ens.north);
-  \draw[arrow] (hlv.south) -- ++(0,-0.3) -| ([xshift=2cm]ens.north);
-  \draw[arrow] (ens) -- (cred);
-  \draw[arrow] (cred.south) -- ++(0,-0.3) -| (dec.north);
-  \draw[arrow] (cred.south) -- ++(0,-0.3) -| (conf.north);
-  \draw[arrow] (dec.south) -- ++(0,-0.3) -| (route.north);
-  \draw[arrow] (conf.south) -- ++(0,-0.3) -| (route.north);
-\end{tikzpicture}
-\caption{Pipeline. Human label distributions enter member training only for the soft-label variants, and conformal calibration for every method. Single-model variants (EffCre, MCD-Credal) and the LLM prompt-credal share everything from the credal layer down.}
+\includegraphics[width=\textwidth]{results/fig/arch/pipeline.png}
+\caption{System architecture. A (text, target) pair is encoded by DeBERTa-v3-base; $M$ members trained with one of five objectives produce probability vectors; the credal layer takes their class-wise min and max and tightens the bounds to the reachable set; three consumers read the set: the uncertainty decomposition, conformal calibration against the human label distributions of the calibration split, and interval dominance for the predict / set / defer decision. Single-model variants (EffCre, MCD-Credal) and the LLM prompt-credal plug in at the credal layer.}
 \label{fig:arch}
+\end{figure}
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{results/fig/arch/members.png}
+\caption{The four member objectives. Hard-label cross-entropy; soft cross-entropy against the human vote distribution; the CVaR-DRO loss that back-propagates only the hardest $\delta$ fraction of each batch; and the interval head of Credal Deep Ensembles with its interval softmax. Every system in the study is one member type wrapped by the same credal layer.}
+\label{fig:members}
 \end{figure}
 
 % =====================================================================
@@ -220,6 +235,13 @@ COVID-19-Stance test (4 targets) \cite{glandt2021} & 800 & -- & cross-dataset un
 \caption{Data. $\lambda_x=(n_{\textsc{favor}},n_{\textsc{against}},n_{\textsc{none}})/n$, median $n=8$; \textsc{neutral} votes mapped to \textsc{none}. The \emph{Climate Change} target has no released votes.}
 \label{tab:data}
 \end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.6\textwidth]{results/fig/arch/loto.png}
+\caption{Leave-one-target-out protocol. Each fold trains on four SemEval targets and holds one out; the official test items of the held-out target are the ``unseen'' items for that fold.}
+\label{fig:loto}
+\end{figure}
 
 \textbf{Protocol.} AdamW $2\times10^{-5}$, 5 epochs, batch 32, max length 128, bf16 autocast with fp32 master weights; $M=5$ members (seed $i$ + 80\% bootstrap); MC-dropout $T=10$; CreNet $\delta=0.5$; CreDRO $\delta_i\in\{0.5,0.625,0.75,0.875,1\}$. Leave-one-target-out (LOTO): five folds, each excluding one SemEval target from training; the official test set is then split into seen and unseen items. 151 member trainings ($\approx$45\,s each) on one RTX PRO 5000; all credal, conformal and decision computations on CPU from cached outputs.
 \textbf{Metrics.} Accuracy, $F_{avg}$ (official: mean F1 of \textsc{favor} and \textsc{against}), macro-F1, ECE (15 bins), NLL; misclassification AUROC and AURC with TU \cite{geifman2017}; unseen-target AUROC with EU, width and TU; determinacy, set accuracy, $u_{65}$ \cite{zaffalon2012}; Spearman $\rho$ between AU/EU/TU and human entropy; JSD/TV between $p^*$ and $\lambda_x$; conformal coverage/efficiency over 100 random 50/50 re-splits of the voted cal$\,\cup\,$test items; expected decision cost with $c_{err}=1$, $c_{defer}=0.3$, $c_{set}=0.15$ per extra class. ``TU'' is the upper entropy for credal methods and the predictive entropy otherwise; ``EU'' is $\up H-\lo H$ for credal methods, mutual information for DE/MCD, vacuity for EDL \cite{sensoy2018} and $1-\max p$ for single models.
@@ -467,7 +489,14 @@ CreWrap-Soft & ECE / LOTO AUROC (TU) & 0.077 / 0.843 & 0.059 / 0.857 & 0.052 / 0
 
 \paragraph{Which construction.} Post-hoc wrapping of a deep ensemble is the baseline; replacing seed diversity by DRO diversity (CreDRO) improves calibration and unseen-target AUROC at identical cost; replacing hard labels by human label distributions (Soft) improves calibration further, gives the best human alignment and the most efficient conformal sets, and keeps the epistemic score flat on ambiguous items. Combining both (CreDRO-Soft) gives the best unseen-target detection and the cleanest ambiguity/novelty separation, at the price of slightly higher in-target AURC. Trained-interval heads (CreDE) give excellent width-based novelty detection but near-degenerate sets; EffCre is the cheapest option and matches softmax-level novelty detection on COVID but cannot separate the two kinds of uncertainty.
 
-\paragraph{A measurement result.} The textbook decomposition $\EU=\up H-\lo H$ is unusable for unseen-target detection in three-class stance: members collapse to near-uniform predictions on a new target, the lower entropy saturates and the difference shrinks. Interval width (or the distance-based measures of \cite{gonzalez2026}) should be used for the epistemic part and the upper entropy for total uncertainty.
+\paragraph{A measurement result.} The textbook decomposition $\EU=\up H-\lo H$ is unusable for unseen-target detection in three-class stance: members collapse to near-uniform predictions on a new target, the lower entropy saturates and the difference shrinks. Interval width (or the distance-based measures of \cite{gonzalez2026}) should be used for the epistemic part and the upper entropy for total uncertainty. Figure~\ref{fig:eupath} illustrates the mechanism.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{results/fig/arch/eu_pathology.png}
+\caption{Why the entropy-based epistemic score fails on unseen targets. On a seen target members are confident: $\lo H$ is small and $\up H-\lo H$ is sizeable. On an unseen target every member collapses towards uniform, $\lo H$ saturates near $\log_2 3$ and the difference shrinks although the box itself is larger. Upper entropy or width should be used instead.}
+\label{fig:eupath}
+\end{figure}
 
 \paragraph{Human label distributions with 8 votes.} They are informative enough to train on and to calibrate on, but too noisy for a 90\% distribution-free guarantee to be tight; ChaosNLI-style data with $\sim$100 votes \cite{nie2020} would close that gap.
 

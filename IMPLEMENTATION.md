@@ -169,3 +169,15 @@ Ensemble-size ablation (first *M* members of each in-target ensemble), 1,000-res
 | `FINAL_REPORT.md` / `CrediStance_Final_Report.tex` | the written report (Markdown and LaTeX) |
 
 Two pipeline issues found and fixed during the run, recorded here so they are not rediscovered: (1) transformers ≥ 5 loads `deberta-v3-base` in fp16 → NaN fine-tuning unless `dtype=torch.float32` is passed; (2) `xargs` strips quotes, so multi-word `--exclude_target` values need `xargs -d '\n'` in `run_jobs.sh` (the first LOTO pass silently trained on the full data for four of five folds and had to be re-run).
+
+## 11. Diagrams
+
+The architecture and concept diagrams in the reports (`results/fig/arch/*.png`) are rendered from the SVG React components in `docs/diagrams.jsx`, which also power the presentation at https://rakeshtirlangi.github.io/Credi-Stance/. To regenerate them, serve `docs/` locally and screenshot `figure.html`:
+
+```bash
+cd docs && python3 -m http.server 8124 &
+google-chrome --headless=new --hide-scrollbars --force-device-scale-factor=2 --window-size=1580,600 \
+  --screenshot=../results/fig/arch/pipeline.png "http://localhost:8124/figure.html?d=Pipeline&theme=light"
+```
+
+Available `d` values: SameVector, CredalIntro, AmbigVsIgnor, DecompDiag, ClassicalVsModern, Pipeline, CreDROSoftDiagram, Dominance, ConformalDiag, LOTO, EUPathology, Members. `theme=dark` gives the deck colours.

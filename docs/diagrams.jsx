@@ -1,6 +1,12 @@
 // Hand-built SVG diagrams for the deck.
-const CLS = {F: "#4ade80", A: "#fb7185", N: "#94a3b8"};
-const INK = "#e9edf9", MUTED = "#9ba6c9", DIM = "#6b7598", ACC = "#8b97ff", ACC2 = "#3dd6c6", GOLD = "#ffc46b", ROSE = "#ff6f9c", VIO = "#c084fc";
+// Palette: dark (deck) by default; window.THEME = "light" switches to a print palette (used by figure.html).
+const LIGHT = (window.THEME === "light");
+const CLS = LIGHT ? {F: "#15803d", A: "#be123c", N: "#64748b"} : {F: "#4ade80", A: "#fb7185", N: "#94a3b8"};
+const INK = LIGHT ? "#0f172a" : "#e9edf9", MUTED = LIGHT ? "#475569" : "#9ba6c9", DIM = LIGHT ? "#64748b" : "#6b7598",
+  ACC = LIGHT ? "#4f5bd5" : "#8b97ff", ACC2 = LIGHT ? "#0f8f85" : "#3dd6c6", GOLD = LIGHT ? "#c77d0a" : "#ffc46b",
+  ROSE = LIGHT ? "#d6336c" : "#ff6f9c", VIO = LIGHT ? "#7e22ce" : "#c084fc";
+// translucent white in the dark theme becomes translucent ink in the light theme
+const wa = (a) => LIGHT ? `rgba(15,23,42,${Math.min(1, a * 1.6).toFixed(3)})` : `rgba(255,255,255,${a})`;
 
 // ---------- geometry helpers for the 3-class simplex ----------
 function simplexVerts(cx, cy, r) { // FAVOR top, AGAINST bottom-left, NONE bottom-right
@@ -25,7 +31,7 @@ function Simplex({cx, cy, r, l, u, points = [], point, label, fill = ACC, showLa
   const poly = l ? credalPolygon(l, u).map(p => bary(p, V)) : null;
   return (
     <g>
-      <polygon points={V.map(v => v.join(",")).join(" ")} fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.25)" strokeWidth="1.5" />
+      <polygon points={V.map(v => v.join(",")).join(" ")} fill={wa(.03)} stroke={wa(.25)} strokeWidth="1.5" />
       {showLabels && <>
         <text x={V[0][0]} y={V[0][1] - 12} textAnchor="middle" fill={CLS.F} fontSize="15" fontWeight="700">FAVOR</text>
         <text x={V[1][0] - 6} y={V[1][1] + 22} textAnchor="middle" fill={CLS.A} fontSize="15" fontWeight="700">AGAINST</text>
@@ -74,7 +80,7 @@ function SameVector() {
       <path d="M895 220 L 960 220" stroke={DIM} strokeWidth="2.5" className="flow" />
       <polygon points="960,213 972,220 960,227" fill={DIM} />
       {/* same vector */}
-      <rect x="990" y="140" width="380" height="160" rx="16" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.15)" />
+      <rect x="990" y="140" width="380" height="160" rx="16" fill={wa(.04)} stroke={wa(.15)} />
       <text x="1010" y="170" fill={MUTED} fontSize="13" className="mono">ONE probability vector, for BOTH</text>
       {bars(1085, 188, p, 190)}
       <text x="1180" y="350" textAnchor="middle" fill={ROSE} fontSize="20" fontWeight="800">same output → no basis to decide</text>
@@ -98,15 +104,15 @@ function CredalIntro() {
         {[["FAVOR", l[0], u[0], CLS.F], ["AGAINST", l[1], u[1], CLS.A], ["NONE", l[2], u[2], CLS.N]].map(([n, a, b, c], i) => (
           <g key={n} transform={`translate(40,${40 + i * 70})`}>
             <text x="0" y="0" fill={c} fontSize="15" fontWeight="700">{n}</text>
-            <rect x="0" y="12" width="280" height="18" rx="6" fill="rgba(255,255,255,.06)" />
+            <rect x="0" y="12" width="280" height="18" rx="6" fill={wa(.06)} />
             <rect x={a * 280} y="12" width={(b - a) * 280} height="18" rx="6" fill={c} opacity=".85" />
             <text x={a * 280 - 6} y="26" fill={MUTED} fontSize="13" className="mono" textAnchor="end">{a.toFixed(2)}</text>
             <text x={b * 280 + 6} y="26" fill={MUTED} fontSize="13" className="mono" textAnchor="start">{b.toFixed(2)}</text>
           </g>))}
         <text x="0" y="270" fill={INK} fontSize="16">lower probability  l<tspan baselineShift="sub" fontSize="11">k</tspan> = min over members</text>
         <text x="0" y="298" fill={INK} fontSize="16">upper probability u<tspan baselineShift="sub" fontSize="11">k</tspan> = max over members</text>
-        <text x="0" y="340" fill={MUTED} fontSize="15">white dots = ensemble members p₁…p₅</text>
-        <text x="0" y="364" fill={MUTED} fontSize="15">gold dot = point prediction (intersection probability)</text>
+        <text x="0" y="340" fill={MUTED} fontSize="15">dots = ensemble members p₁…p₅</text>
+        <text x="0" y="364" fill={MUTED} fontSize="15">gold dot = intersection probability p*</text>
       </g>
     </svg>
   );
@@ -133,17 +139,17 @@ function AmbigVsIgnor() {
 
 // ---------- Classical credal networks vs modern credal deep learning ----------
 function ClassicalVsModern() {
-  const node = (x, y, t) => <g><circle cx={x} cy={y} r="26" fill="rgba(255,255,255,.05)" stroke={MUTED} strokeWidth="1.5" /><text x={x} y={y + 5} textAnchor="middle" fill={INK} fontSize="15" fontWeight="700">{t}</text></g>;
+  const node = (x, y, t) => <g><circle cx={x} cy={y} r="26" fill={wa(.05)} stroke={MUTED} strokeWidth="1.5" /><text x={x} y={y + 5} textAnchor="middle" fill={INK} fontSize="15" fontWeight="700">{t}</text></g>;
   const edge = (a, b) => <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke={MUTED} strokeWidth="1.5" markerEnd="url(#arr)" />;
   return (
     <svg viewBox="0 0 1400 480">
       <defs><marker id="arr" markerWidth="10" markerHeight="10" refX="30" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill={MUTED} /></marker></defs>
       {/* classical */}
-      <rect x="20" y="20" width="640" height="440" rx="20" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.12)" />
+      <rect x="20" y="20" width="640" height="440" rx="20" fill={wa(.03)} stroke={wa(.12)} />
       <text x="44" y="56" fill={MUTED} fontSize="14" className="mono">CLASSICAL · credal networks (Cozman 2000)</text>
       {edge([150, 150], [260, 250])}{edge([370, 150], [260, 250])}{edge([260, 250], [260, 360])}
       {node(150, 150, "A")}{node(370, 150, "B")}{node(260, 250, "C")}{node(260, 360, "Y")}
-      <rect x="430" y="110" width="200" height="110" rx="12" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.12)" />
+      <rect x="430" y="110" width="200" height="110" rx="12" fill={wa(.04)} stroke={wa(.12)} />
       <text x="530" y="136" textAnchor="middle" fill={MUTED} fontSize="12" className="mono">P(C | A,B) ∈</text>
       <text x="530" y="165" textAnchor="middle" fill={INK} fontSize="16" className="mono">[0.30, 0.45]</text>
       <text x="530" y="192" textAnchor="middle" fill={INK} fontSize="16" className="mono">[0.55, 0.70]</text>
@@ -152,13 +158,13 @@ function ClassicalVsModern() {
       {/* modern */}
       <rect x="720" y="20" width="660" height="440" rx="20" fill="rgba(61,214,198,.05)" stroke="rgba(61,214,198,.4)" />
       <text x="744" y="56" fill={ACC2} fontSize="14" className="mono">MODERN · credal deep learning (2024–2026)</text>
-      <rect x="744" y="110" width="150" height="70" rx="12" fill="rgba(255,255,255,.05)" stroke={MUTED} /><text x="819" y="140" textAnchor="middle" fill={INK} fontSize="15" fontWeight="700">text + target</text><text x="819" y="162" textAnchor="middle" fill={MUTED} fontSize="12" className="mono">raw tokens</text>
+      <rect x="744" y="110" width="150" height="70" rx="12" fill={wa(.05)} stroke={MUTED} /><text x="819" y="140" textAnchor="middle" fill={INK} fontSize="15" fontWeight="700">text + target</text><text x="819" y="162" textAnchor="middle" fill={MUTED} fontSize="12" className="mono">raw tokens</text>
       <path d="M894 145 L 940 145" stroke={ACC2} strokeWidth="2.5" className="flow" />
       <rect x="940" y="95" width="170" height="100" rx="12" fill="rgba(139,151,255,.12)" stroke={ACC} /><text x="1025" y="138" textAnchor="middle" fill={INK} fontSize="15" fontWeight="700">neural encoder</text><text x="1025" y="162" textAnchor="middle" fill={MUTED} fontSize="12" className="mono">DeBERTa / LLM</text>
       <path d="M1110 145 L 1160 145" stroke={ACC2} strokeWidth="2.5" className="flow" />
       <g transform="translate(1160,100)">
         {[["F", 0.15, 0.3, CLS.F], ["A", 0.5, 0.7, CLS.A], ["N", 0.1, 0.25, CLS.N]].map(([k, a, b, c], i) => (
-          <g key={k} transform={`translate(0,${i * 30})`}><rect x="0" y="0" width="190" height="18" rx="5" fill="rgba(255,255,255,.06)" /><rect x={a * 190} y="0" width={(b - a) * 190} height="18" rx="5" fill={c} /></g>))}
+          <g key={k} transform={`translate(0,${i * 30})`}><rect x="0" y="0" width="190" height="18" rx="5" fill={wa(.06)} /><rect x={a * 190} y="0" width={(b - a) * 190} height="18" rx="5" fill={c} /></g>))}
         <text x="95" y="118" textAnchor="middle" fill={MUTED} fontSize="12" className="mono">credal set at the OUTPUT</text>
       </g>
       <text x="744" y="300" fill={INK} fontSize="17">the set is built from probability vectors the encoder produces</text>
@@ -175,7 +181,7 @@ function Pipeline({step = 99}) {
   const on = (i) => ({opacity: step >= i ? 1 : 0.12, transition: "opacity .4s"});
   const memberColors = [CLS.N, ACC2, GOLD, ACC, VIO];
   const memberNames = ["CE (hard labels)", "Soft (λₓ)", "DRO (top-δ)", "Soft + DRO ★", "CreNet (interval head)"];
-  const box = (x, y, w, h, title, sub, stroke = MUTED, fill = "rgba(255,255,255,.04)") => (
+  const box = (x, y, w, h, title, sub, stroke = MUTED, fill = wa(.04)) => (
     <g><rect x={x} y={y} width={w} height={h} rx="14" fill={fill} stroke={stroke} strokeWidth="1.5" />
       <text x={x + w / 2} y={y + (sub ? h / 2 - 4 : h / 2 + 6)} textAnchor="middle" fill={INK} fontSize="17" fontWeight="700">{title}</text>
       {sub && <text x={x + w / 2} y={y + h / 2 + 20} textAnchor="middle" fill={MUTED} fontSize="13" className="mono">{sub}</text>}</g>);
@@ -194,7 +200,7 @@ function Pipeline({step = 99}) {
       <g style={on(1)}>
         {memberNames.map((n, i) => { const y = 70 + i * 95; return (<g key={n}>
           {arrow(`M425 295 C 470 295, 470 ${y + 30}, 505 ${y + 30}`, memberColors[i])}
-          <rect x="505" y={y} width="230" height="60" rx="12" fill="rgba(255,255,255,.04)" stroke={memberColors[i]} strokeWidth="1.5" />
+          <rect x="505" y={y} width="230" height="60" rx="12" fill={wa(.04)} stroke={memberColors[i]} strokeWidth="1.5" />
           <text x="620" y={y + 26} textAnchor="middle" fill={INK} fontSize="15" fontWeight="700">member {i + 1}</text>
           <text x="620" y={y + 46} textAnchor="middle" fill={memberColors[i]} fontSize="12.5" className="mono">{n}</text>
           {arrow(`M735 ${y + 30} C 780 ${y + 30}, 780 295, 820 295`, memberColors[i])}
@@ -231,27 +237,27 @@ function MemberMini({kind}) {
   const W = 300, H = 150;
   if (kind === "ce") return (<svg viewBox={`0 0 ${W} ${H}`}>
     <text x="10" y="20" fill={MUTED} fontSize="12" className="mono">target: one-hot y</text>
-    {["F", "A", "N"].map((k, i) => <g key={k}><rect x="90" y={38 + i * 32} width="190" height="20" rx="5" fill="rgba(255,255,255,.06)" /><rect x="90" y={38 + i * 32} width={i === 1 ? 190 : 0} height="20" rx="5" fill={CLS[k]} /><text x="80" y={53 + i * 32} textAnchor="end" fill={CLS[k]} fontSize="12" className="mono">{k}</text></g>)}
+    {["F", "A", "N"].map((k, i) => <g key={k}><rect x="90" y={38 + i * 32} width="190" height="20" rx="5" fill={wa(.06)} /><rect x="90" y={38 + i * 32} width={i === 1 ? 190 : 0} height="20" rx="5" fill={CLS[k]} /><text x="80" y={53 + i * 32} textAnchor="end" fill={CLS[k]} fontSize="12" className="mono">{k}</text></g>)}
   </svg>);
   if (kind === "soft") return (<svg viewBox={`0 0 ${W} ${H}`}>
     <text x="10" y="20" fill={MUTED} fontSize="12" className="mono">target: human votes λₓ = (2,5,1)/8</text>
-    {[[0.25, "F"], [0.625, "A"], [0.125, "N"]].map(([v, k], i) => <g key={k}><rect x="90" y={38 + i * 32} width="190" height="20" rx="5" fill="rgba(255,255,255,.06)" /><rect x="90" y={38 + i * 32} width={190 * v} height="20" rx="5" fill={CLS[k]} /><text x="80" y={53 + i * 32} textAnchor="end" fill={CLS[k]} fontSize="12" className="mono">{k}</text><text x={95 + 190 * v} y={53 + i * 32} fill={INK} fontSize="12" className="mono">{v}</text></g>)}
+    {[[0.25, "F"], [0.625, "A"], [0.125, "N"]].map(([v, k], i) => <g key={k}><rect x="90" y={38 + i * 32} width="190" height="20" rx="5" fill={wa(.06)} /><rect x="90" y={38 + i * 32} width={190 * v} height="20" rx="5" fill={CLS[k]} /><text x="80" y={53 + i * 32} textAnchor="end" fill={CLS[k]} fontSize="12" className="mono">{k}</text><text x={95 + 190 * v} y={53 + i * 32} fill={INK} fontSize="12" className="mono">{v}</text></g>)}
   </svg>);
   if (kind === "dro") { const losses = [2.6, 2.1, 1.7, 1.4, 1.1, 0.9, 0.7, 0.5, 0.35, 0.2]; const k = 5; return (<svg viewBox={`0 0 ${W} ${H}`}>
     <text x="10" y="20" fill={MUTED} fontSize="12" className="mono">batch sorted by loss · keep top δ·B</text>
-    {losses.map((v, i) => <rect key={i} x={20 + i * 27} y={130 - v * 36} width="20" height={v * 36} rx="3" fill={i < k ? GOLD : "rgba(255,255,255,.12)"} />)}
+    {losses.map((v, i) => <rect key={i} x={20 + i * 27} y={130 - v * 36} width="20" height={v * 36} rx="3" fill={i < k ? GOLD : wa(.12)} />)}
     <line x1={20 + k * 27 - 4} x2={20 + k * 27 - 4} y1="35" y2="135" stroke={GOLD} strokeDasharray="4 4" />
     <text x={20 + k * 27 + 2} y="48" fill={GOLD} fontSize="12" className="mono">δ = 0.5</text>
-    <text x="150" y="145" fill={DIM} fontSize="11" className="mono">gradient only from the hard tail</text>
+    <text x="20" y="147" fill={DIM} fontSize="11" className="mono">gradient from the hard tail only</text>
   </svg>); }
   return (<svg viewBox={`0 0 ${W} ${H}`}>
     <text x="10" y="20" fill={MUTED} fontSize="12" className="mono">head outputs m and h = softplus(·)</text>
     {[[0.2, 0.08, "F"], [0.6, 0.1, "A"], [0.2, 0.06, "N"]].map(([m, h, k], i) => <g key={k}>
-      <rect x="90" y={38 + i * 32} width="190" height="20" rx="5" fill="rgba(255,255,255,.06)" />
+      <rect x="90" y={38 + i * 32} width="190" height="20" rx="5" fill={wa(.06)} />
       <rect x={90 + 190 * (m - h)} y={38 + i * 32} width={190 * 2 * h} height="20" rx="5" fill={CLS[k]} opacity=".9" />
       <line x1={90 + 190 * m} x2={90 + 190 * m} y1={36 + i * 32} y2={60 + i * 32} stroke={INK} strokeWidth="2" />
       <text x="80" y={53 + i * 32} textAnchor="end" fill={CLS[k]} fontSize="12" className="mono">{k}</text></g>)}
-    <text x="90" y="145" fill={DIM} fontSize="11" className="mono">[m−h, m+h] → interval softmax → [q_L, q_U]</text>
+    <text x="20" y="147" fill={DIM} fontSize="11" className="mono">[m−h, m+h] → interval softmax → [qL, qU]</text>
   </svg>);
 }
 
@@ -271,7 +277,7 @@ function CreDROSoftDiagram({step = 99}) {
         <text x="40" y="235" fill={MUTED} fontSize="14">8 SemEval-2016 annotators per tweet</text>
         <path d="M330 140 L 380 140" stroke={ACC2} strokeWidth="2.5" className="flow" />
         <g transform="translate(390,70)">
-          {[[0.25, "F"], [0.625, "A"], [0.125, "N"]].map(([v, k], i) => <g key={k}><rect x="0" y={i * 36} width="200" height="24" rx="6" fill="rgba(255,255,255,.06)" /><rect x="0" y={i * 36} width={200 * v} height="24" rx="6" fill={CLS[k]} /><text x={200 * v + 8} y={i * 36 + 17} fill={INK} fontSize="13" className="mono">{v}</text></g>)}
+          {[[0.25, "F"], [0.625, "A"], [0.125, "N"]].map(([v, k], i) => <g key={k}><rect x="0" y={i * 36} width="200" height="24" rx="6" fill={wa(.06)} /><rect x="0" y={i * 36} width={200 * v} height="24" rx="6" fill={CLS[k]} /><text x={200 * v + 8} y={i * 36 + 17} fill={INK} fontSize="13" className="mono">{v}</text></g>)}
           <text x="0" y="135" fill={INK} fontSize="15" fontWeight="700">λₓ = (n_F, n_A, n_N) / n</text>
           <text x="0" y="158" fill={MUTED} fontSize="13">per-sample loss: −Σₖ λₓ,ₖ log pₖ</text>
         </g>
@@ -281,9 +287,9 @@ function CreDROSoftDiagram({step = 99}) {
         <text x="30" y="300" fill={GOLD} fontSize="14" className="mono">② MEMBER DIVERSITY BY DESIGN (CVaR-DRO, δᵢ ∈ [0.5, 1])</text>
         {deltas.map((d, i) => { const x = 40 + i * 125; const losses = [2.5, 2.0, 1.6, 1.3, 1.0, 0.8, 0.6, 0.4]; const k = Math.round(d * 8); return (
           <g key={d} transform={`translate(${x},320)`}>
-            <rect x="0" y="0" width="110" height="150" rx="12" fill="rgba(255,255,255,.03)" stroke={ACC} strokeOpacity=".5" />
+            <rect x="0" y="0" width="110" height="150" rx="12" fill={wa(.03)} stroke={ACC} strokeOpacity=".5" />
             <text x="55" y="22" textAnchor="middle" fill={INK} fontSize="13" fontWeight="700">member {i + 1}</text>
-            {losses.map((v, j) => <rect key={j} x={10 + j * 11.5} y={120 - v * 30} width="9" height={v * 30} rx="2" fill={j < k ? GOLD : "rgba(255,255,255,.12)"} />)}
+            {losses.map((v, j) => <rect key={j} x={10 + j * 11.5} y={120 - v * 30} width="9" height={v * 30} rx="2" fill={j < k ? GOLD : wa(.12)} />)}
             <text x="55" y="142" textAnchor="middle" fill={GOLD} fontSize="12" className="mono">δ = {d}</text>
           </g>); })}
         <text x="40" y="500" fill={MUTED} fontSize="14">δ = 0.5 trains on the hardest half only · δ = 1 trains on everything</text>
@@ -316,7 +322,7 @@ function Dominance() {
           <text x="10" y="50" fill={INK} fontSize="17" fontWeight="700">{r.t}</text>
           {["F", "A", "N"].map((k, j) => { const x0 = 180; const sc = 380; const nd = r.u[j] >= maxl - 1e-9; return (<g key={k}>
             <text x={x0 - 12} y={22 + j * 30 + 14} textAnchor="end" fill={CLS[k]} fontSize="12" className="mono">{k}</text>
-            <rect x={x0} y={22 + j * 30} width={sc} height="18" rx="5" fill="rgba(255,255,255,.05)" />
+            <rect x={x0} y={22 + j * 30} width={sc} height="18" rx="5" fill={wa(.05)} />
             <rect x={x0 + r.l[j] * sc} y={22 + j * 30} width={(r.u[j] - r.l[j]) * sc} height="18" rx="5" fill={CLS[k]} opacity={nd ? .95 : .3} />
           </g>); })}
           <line x1={180 + maxl * 380} x2={180 + maxl * 380} y1="14" y2="112" stroke={INK} strokeDasharray="4 4" strokeWidth="1.5" />
@@ -382,7 +388,7 @@ function DecompDiag() {
           <circle cx={mx[0]} cy={mx[1]} r="7" fill={GOLD} /><text x={mx[0] + 12} y={mx[1] - 8} fill={GOLD} fontSize="14" fontWeight="700">argmax H → H̄ (TU)</text></g>; })()} />
       <g transform="translate(470,70)">
         <text x="0" y="0" fill={MUTED} fontSize="13" className="mono">ENTROPY IN BITS</text>
-        <rect x="0" y="20" width="200" height="26" rx="7" fill="rgba(255,255,255,.06)" />
+        <rect x="0" y="20" width="200" height="26" rx="7" fill={wa(.06)} />
         <rect x="0" y="20" width="92" height="26" rx="7" fill={ROSE} /><rect x="92" y="20" width="78" height="26" fill={GOLD} />
         <text x="46" y="38" textAnchor="middle" fill="#1a0a10" fontSize="12" fontWeight="800">AU = H̲</text>
         <text x="131" y="38" textAnchor="middle" fill="#1a0a10" fontSize="12" fontWeight="800">EU</text>

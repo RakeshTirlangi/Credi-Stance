@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>figure render</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<style>
+  html,body{margin:0;height:100%;font-family:Inter,system-ui,sans-serif}
+  body{background:#fff;color:#0f172a}
+  body.dark{background:#0b1020;color:#e9edf9}
+  #root,#root>div{width:100vw;height:100vh;display:flex;align-items:center;justify-content:center}
+  svg{width:100%;height:100%}
+  svg text{font-family:Inter,system-ui,sans-serif} svg .mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+  .members{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;padding:18px 22px;width:100%;height:100%;box-sizing:border-box}
+  .members .m{border:1.5px solid var(--c);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;background:rgba(15,23,42,.02)}
+  .members h3{margin:0;font-size:22px} .members .tag{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;color:var(--c);text-transform:uppercase}
+  .members svg{height:150px} .members .eq{text-align:center;font-size:19px;margin:4px 0} .members p{margin:0;color:#475569;font-size:15.5px;line-height:1.4}
+</style></head>
+<body>
+<div id="root"></div>
+<script>
+  const q = new URLSearchParams(location.search); window.THEME = q.get("theme") || "light"; window.FIG = q.get("d") || "Pipeline";
+  if (window.THEME === "dark") document.body.classList.add("dark");
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.4/babel.min.js"></script>
+<script type="text/babel" data-presets="react" src="diagrams.jsx"></script>
+<script type="text/babel" data-presets="react">
+  const Kx = ({tex}) => <div className="eq" dangerouslySetInnerHTML={{__html: katex.renderToString(tex, {throwOnError: false})}} />;
+  function Members() {
+    const items = [
+      ["CE", "Hard labels", "ce", "-\\log p_y", "standard cross-entropy; seed + bootstrap diversity only", "#64748b"],
+      ["Soft", "Human distribution", "soft", "-\\textstyle\\sum_k \\lambda_{x,k}\\log p_k", "λₓ from released per-annotator votes where they exist", "#0f8f85"],
+      ["DRO", "CVaR tail", "dro", "\\tfrac{1}{\\lfloor\\delta B\\rfloor}\\textstyle\\sum_{i\\in\\mathrm{top}_\\delta}\\ell_i", "member i uses δᵢ ∈ {0.5, 0.625, 0.75, 0.875, 1}", "#c77d0a"],
+      ["CreNet", "Interval head", "crenet", "q_{L,i}=\\sigma\\!\\big(a_{L,i}-\\mathrm{LSE}_{k\\ne i}\\,m_k\\big)", "loss = CE(q_U) + CE(q_L) on the hardest half of each batch", "#7e22ce"],
+    ];
+    return <div className="members">{items.map(([tag, t, k, tex, cap, c]) => (
+      <div className="m" key={k} style={{"--c": c}}><span className="tag">{tag}</span><h3>{t}</h3><MemberMini kind={k} /><Kx tex={tex} /><p>{cap}</p></div>))}</div>;
+  }
+  const MAP = {SameVector, CredalIntro, AmbigVsIgnor, DecompDiag, ClassicalVsModern, Pipeline, CreDROSoftDiagram, Dominance, ConformalDiag, LOTO, EUPathology, Members};
+  const Cmp = MAP[window.FIG];
+  ReactDOM.createRoot(document.getElementById("root")).render(<div>{Cmp ? <Cmp /> : <p>unknown figure</p>}</div>);
+</script>
+</body></html>
