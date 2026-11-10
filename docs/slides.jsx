@@ -390,16 +390,9 @@ const SLIDES = [
   {title: "Thank you", steps: 0, notes: "",
     render: () => (
       <div className="slide title-slide">
-        <div className="kicker">Thank you</div>
-        <h1 style={{fontSize: 68}}>Questions?</h1>
-        <p className="sub" style={{fontSize: 24, marginTop: 20}}>Code, data, cached model outputs, the full report and this presentation are in one repository.</p>
-        <div className="title-meta">
-          <Pill kind="acc">github.com/RakeshTirlangi/Credi-Stance</Pill><Pill kind="teal">FINAL_REPORT.md</Pill><Pill kind="gold">IMPLEMENTATION.md</Pill>
-        </div>
-        <div style={{display: "flex", gap: 60, marginTop: 60}}>
-          <div className="hero-num"><div className="v grad">6 + 1</div><div className="k">credal constructions compared, one proposed</div></div>
-          <div className="hero-num"><div className="v grad">8</div><div className="k">experiments, 5 LOTO folds, 100 conformal re-splits</div></div>
-          <div className="hero-num"><div className="v grad">0</div><div className="k">new annotations collected</div></div>
+        <h1 style={{fontSize: 96}}>Thank <span className="grad">you</span></h1>
+        <div className="title-meta" style={{marginTop: 48}}>
+          <a href="https://github.com/RakeshTirlangi/Credi-Stance" target="_blank" rel="noopener" style={{textDecoration: "none"}}><Pill kind="acc">github.com/RakeshTirlangi/Credi-Stance</Pill></a>
         </div>
       </div>)},
 ];
