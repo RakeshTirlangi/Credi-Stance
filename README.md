@@ -4,6 +4,7 @@ Stance detection assigns FAVOR, AGAINST or NONE to a (text, target) pair. A sing
 
 Six credal constructions are compared on one DeBERTa-v3-base backbone, and a new combination is proposed: **CreDRO-Soft**, distributionally-robust ensemble members trained on human label distributions recovered from the publicly released SemEval-2016 per-annotator votes. No new annotation is collected.
 
+- **Presentation (GitHub Pages):** https://rakeshtirlangi.github.io/Credi-Stance/ (source in `docs/`; React + SVG, no build step)
 - **Full report:** [FINAL_REPORT.md](FINAL_REPORT.md) (problem definition, alternatives, architecture, protocol, results, discussion, references)
 - **LaTeX version:** [CrediStance_Final_Report.tex](CrediStance_Final_Report.tex), Overleaf bundle [CrediStance_Final_Report_overleaf.zip](CrediStance_Final_Report_overleaf.zip)
 - **Code walkthrough:** [IMPLEMENTATION.md](IMPLEMENTATION.md)
