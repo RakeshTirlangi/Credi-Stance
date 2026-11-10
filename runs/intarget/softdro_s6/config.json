@@ -1,0 +1,15 @@
+{
+ "method": "softdro",
+ "backbone": "microsoft/deberta-v3-base",
+ "seed": 6,
+ "delta": 0.929,
+ "bootstrap": 0.8,
+ "exclude_target": "",
+ "train_sets": "semeval_train",
+ "epochs": 5,
+ "lr": 2e-05,
+ "bs": 32,
+ "max_len": 128,
+ "mc_samples": 0,
+ "out": "runs/intarget/softdro_s6"
+}

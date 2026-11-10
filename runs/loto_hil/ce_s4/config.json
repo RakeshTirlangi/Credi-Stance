@@ -1,0 +1,15 @@
+{
+ "method": "ce",
+ "backbone": "microsoft/deberta-v3-base",
+ "seed": 4,
+ "delta": 1.0,
+ "bootstrap": 0.8,
+ "exclude_target": "Hillary Clinton",
+ "train_sets": "semeval_train",
+ "epochs": 5,
+ "lr": 2e-05,
+ "bs": 32,
+ "max_len": 128,
+ "mc_samples": 0,
+ "out": "runs/loto_hil/ce_s4"
+}

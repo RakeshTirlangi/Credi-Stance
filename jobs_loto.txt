@@ -1,0 +1,125 @@
+python3 credistance/train.py --method ce --seed 0 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/ce_s0
+python3 credistance/train.py --method soft --seed 0 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/soft_s0
+python3 credistance/train.py --method dro --seed 0 --delta 0.500 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/dro_s0
+python3 credistance/train.py --method softdro --seed 0 --delta 0.500 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/softdro_s0
+python3 credistance/train.py --method crenet --seed 0 --delta 0.5 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/crenet_s0
+python3 credistance/train.py --method ce --seed 1 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/ce_s1
+python3 credistance/train.py --method soft --seed 1 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/soft_s1
+python3 credistance/train.py --method dro --seed 1 --delta 0.625 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/dro_s1
+python3 credistance/train.py --method softdro --seed 1 --delta 0.625 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/softdro_s1
+python3 credistance/train.py --method crenet --seed 1 --delta 0.5 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/crenet_s1
+python3 credistance/train.py --method ce --seed 2 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/ce_s2
+python3 credistance/train.py --method soft --seed 2 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/soft_s2
+python3 credistance/train.py --method dro --seed 2 --delta 0.750 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/dro_s2
+python3 credistance/train.py --method softdro --seed 2 --delta 0.750 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/softdro_s2
+python3 credistance/train.py --method crenet --seed 2 --delta 0.5 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/crenet_s2
+python3 credistance/train.py --method ce --seed 3 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/ce_s3
+python3 credistance/train.py --method soft --seed 3 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/soft_s3
+python3 credistance/train.py --method dro --seed 3 --delta 0.875 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/dro_s3
+python3 credistance/train.py --method softdro --seed 3 --delta 0.875 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/softdro_s3
+python3 credistance/train.py --method crenet --seed 3 --delta 0.5 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/crenet_s3
+python3 credistance/train.py --method ce --seed 4 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/ce_s4
+python3 credistance/train.py --method soft --seed 4 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/soft_s4
+python3 credistance/train.py --method dro --seed 4 --delta 1.000 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/dro_s4
+python3 credistance/train.py --method softdro --seed 4 --delta 1.000 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/softdro_s4
+python3 credistance/train.py --method crenet --seed 4 --delta 0.5 --bootstrap 0.8 --exclude_target "Atheism" --out runs/loto_ath/crenet_s4
+python3 credistance/train.py --method ce --seed 0 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/ce_s0
+python3 credistance/train.py --method soft --seed 0 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/soft_s0
+python3 credistance/train.py --method dro --seed 0 --delta 0.500 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/dro_s0
+python3 credistance/train.py --method softdro --seed 0 --delta 0.500 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/softdro_s0
+python3 credistance/train.py --method crenet --seed 0 --delta 0.5 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/crenet_s0
+python3 credistance/train.py --method ce --seed 1 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/ce_s1
+python3 credistance/train.py --method soft --seed 1 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/soft_s1
+python3 credistance/train.py --method dro --seed 1 --delta 0.625 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/dro_s1
+python3 credistance/train.py --method softdro --seed 1 --delta 0.625 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/softdro_s1
+python3 credistance/train.py --method crenet --seed 1 --delta 0.5 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/crenet_s1
+python3 credistance/train.py --method ce --seed 2 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/ce_s2
+python3 credistance/train.py --method soft --seed 2 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/soft_s2
+python3 credistance/train.py --method dro --seed 2 --delta 0.750 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/dro_s2
+python3 credistance/train.py --method softdro --seed 2 --delta 0.750 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/softdro_s2
+python3 credistance/train.py --method crenet --seed 2 --delta 0.5 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/crenet_s2
+python3 credistance/train.py --method ce --seed 3 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/ce_s3
+python3 credistance/train.py --method soft --seed 3 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/soft_s3
+python3 credistance/train.py --method dro --seed 3 --delta 0.875 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/dro_s3
+python3 credistance/train.py --method softdro --seed 3 --delta 0.875 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/softdro_s3
+python3 credistance/train.py --method crenet --seed 3 --delta 0.5 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/crenet_s3
+python3 credistance/train.py --method ce --seed 4 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/ce_s4
+python3 credistance/train.py --method soft --seed 4 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/soft_s4
+python3 credistance/train.py --method dro --seed 4 --delta 1.000 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/dro_s4
+python3 credistance/train.py --method softdro --seed 4 --delta 1.000 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/softdro_s4
+python3 credistance/train.py --method crenet --seed 4 --delta 0.5 --bootstrap 0.8 --exclude_target "Climate Change is a Real Concern" --out runs/loto_cli/crenet_s4
+python3 credistance/train.py --method ce --seed 0 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/ce_s0
+python3 credistance/train.py --method soft --seed 0 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/soft_s0
+python3 credistance/train.py --method dro --seed 0 --delta 0.500 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/dro_s0
+python3 credistance/train.py --method softdro --seed 0 --delta 0.500 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/softdro_s0
+python3 credistance/train.py --method crenet --seed 0 --delta 0.5 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/crenet_s0
+python3 credistance/train.py --method ce --seed 1 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/ce_s1
+python3 credistance/train.py --method soft --seed 1 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/soft_s1
+python3 credistance/train.py --method dro --seed 1 --delta 0.625 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/dro_s1
+python3 credistance/train.py --method softdro --seed 1 --delta 0.625 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/softdro_s1
+python3 credistance/train.py --method crenet --seed 1 --delta 0.5 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/crenet_s1
+python3 credistance/train.py --method ce --seed 2 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/ce_s2
+python3 credistance/train.py --method soft --seed 2 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/soft_s2
+python3 credistance/train.py --method dro --seed 2 --delta 0.750 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/dro_s2
+python3 credistance/train.py --method softdro --seed 2 --delta 0.750 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/softdro_s2
+python3 credistance/train.py --method crenet --seed 2 --delta 0.5 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/crenet_s2
+python3 credistance/train.py --method ce --seed 3 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/ce_s3
+python3 credistance/train.py --method soft --seed 3 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/soft_s3
+python3 credistance/train.py --method dro --seed 3 --delta 0.875 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/dro_s3
+python3 credistance/train.py --method softdro --seed 3 --delta 0.875 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/softdro_s3
+python3 credistance/train.py --method crenet --seed 3 --delta 0.5 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/crenet_s3
+python3 credistance/train.py --method ce --seed 4 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/ce_s4
+python3 credistance/train.py --method soft --seed 4 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/soft_s4
+python3 credistance/train.py --method dro --seed 4 --delta 1.000 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/dro_s4
+python3 credistance/train.py --method softdro --seed 4 --delta 1.000 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/softdro_s4
+python3 credistance/train.py --method crenet --seed 4 --delta 0.5 --bootstrap 0.8 --exclude_target "Feminist Movement" --out runs/loto_fem/crenet_s4
+python3 credistance/train.py --method ce --seed 0 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/ce_s0
+python3 credistance/train.py --method soft --seed 0 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/soft_s0
+python3 credistance/train.py --method dro --seed 0 --delta 0.500 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/dro_s0
+python3 credistance/train.py --method softdro --seed 0 --delta 0.500 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/softdro_s0
+python3 credistance/train.py --method crenet --seed 0 --delta 0.5 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/crenet_s0
+python3 credistance/train.py --method ce --seed 1 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/ce_s1
+python3 credistance/train.py --method soft --seed 1 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/soft_s1
+python3 credistance/train.py --method dro --seed 1 --delta 0.625 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/dro_s1
+python3 credistance/train.py --method softdro --seed 1 --delta 0.625 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/softdro_s1
+python3 credistance/train.py --method crenet --seed 1 --delta 0.5 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/crenet_s1
+python3 credistance/train.py --method ce --seed 2 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/ce_s2
+python3 credistance/train.py --method soft --seed 2 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/soft_s2
+python3 credistance/train.py --method dro --seed 2 --delta 0.750 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/dro_s2
+python3 credistance/train.py --method softdro --seed 2 --delta 0.750 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/softdro_s2
+python3 credistance/train.py --method crenet --seed 2 --delta 0.5 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/crenet_s2
+python3 credistance/train.py --method ce --seed 3 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/ce_s3
+python3 credistance/train.py --method soft --seed 3 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/soft_s3
+python3 credistance/train.py --method dro --seed 3 --delta 0.875 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/dro_s3
+python3 credistance/train.py --method softdro --seed 3 --delta 0.875 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/softdro_s3
+python3 credistance/train.py --method crenet --seed 3 --delta 0.5 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/crenet_s3
+python3 credistance/train.py --method ce --seed 4 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/ce_s4
+python3 credistance/train.py --method soft --seed 4 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/soft_s4
+python3 credistance/train.py --method dro --seed 4 --delta 1.000 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/dro_s4
+python3 credistance/train.py --method softdro --seed 4 --delta 1.000 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/softdro_s4
+python3 credistance/train.py --method crenet --seed 4 --delta 0.5 --bootstrap 0.8 --exclude_target "Hillary Clinton" --out runs/loto_hil/crenet_s4
+python3 credistance/train.py --method ce --seed 0 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/ce_s0
+python3 credistance/train.py --method soft --seed 0 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/soft_s0
+python3 credistance/train.py --method dro --seed 0 --delta 0.500 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/dro_s0
+python3 credistance/train.py --method softdro --seed 0 --delta 0.500 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/softdro_s0
+python3 credistance/train.py --method crenet --seed 0 --delta 0.5 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/crenet_s0
+python3 credistance/train.py --method ce --seed 1 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/ce_s1
+python3 credistance/train.py --method soft --seed 1 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/soft_s1
+python3 credistance/train.py --method dro --seed 1 --delta 0.625 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/dro_s1
+python3 credistance/train.py --method softdro --seed 1 --delta 0.625 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/softdro_s1
+python3 credistance/train.py --method crenet --seed 1 --delta 0.5 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/crenet_s1
+python3 credistance/train.py --method ce --seed 2 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/ce_s2
+python3 credistance/train.py --method soft --seed 2 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/soft_s2
+python3 credistance/train.py --method dro --seed 2 --delta 0.750 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/dro_s2
+python3 credistance/train.py --method softdro --seed 2 --delta 0.750 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/softdro_s2
+python3 credistance/train.py --method crenet --seed 2 --delta 0.5 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/crenet_s2
+python3 credistance/train.py --method ce --seed 3 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/ce_s3
+python3 credistance/train.py --method soft --seed 3 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/soft_s3
+python3 credistance/train.py --method dro --seed 3 --delta 0.875 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/dro_s3
+python3 credistance/train.py --method softdro --seed 3 --delta 0.875 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/softdro_s3
+python3 credistance/train.py --method crenet --seed 3 --delta 0.5 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/crenet_s3
+python3 credistance/train.py --method ce --seed 4 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/ce_s4
+python3 credistance/train.py --method soft --seed 4 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/soft_s4
+python3 credistance/train.py --method dro --seed 4 --delta 1.000 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/dro_s4
+python3 credistance/train.py --method softdro --seed 4 --delta 1.000 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/softdro_s4
+python3 credistance/train.py --method crenet --seed 4 --delta 0.5 --bootstrap 0.8 --exclude_target "Legalization of Abortion" --out runs/loto_abo/crenet_s4

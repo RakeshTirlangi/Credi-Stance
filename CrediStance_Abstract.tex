@@ -1,0 +1,152 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+
+% no bold headings
+\renewcommand{\abstractname}{\mdseries Abstract}
+\renewcommand{\refname}{\mdseries References}
+
+\title{Credal Uncertainty Quantification for Reliable Stance Detection on Unseen Targets}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\vspace{-3em}
+
+\begin{abstract}
+\noindent
+Stance detection identifies whether the author of a text is in \emph{favor} of,
+\emph{against}, or \emph{neutral} towards a given target~\cite{mohammad2016,kucuk2020}.
+Current models, from fine-tuned transformers to large language models (LLMs), output a
+single probability distribution over stance labels. That one distribution mixes up two
+different sources of uncertainty~\cite{hullermeier2021}: \emph{aleatoric} uncertainty,
+which comes from sarcasm, implicit stance, missing context and genuine disagreement between
+human annotators~\cite{allaway2020,plank2022}, and \emph{epistemic} uncertainty, which comes
+from targets, domains and events that the model has never seen. As a result, stance
+detectors are often over-confident on unseen targets and cannot give a principled reason
+to abstain.
+
+We propose CrediStance, a stance detection framework based on \emph{credal sets},
+i.e.\ convex sets of probability distributions~\cite{walley1991}. Instead of a single
+point estimate, CrediStance predicts a lower and an upper probability for each stance. It
+builds credal sets from diverse ensembles of transformer encoders and LoRA-adapted
+LLMs~\cite{wang2025wrapper,wang2024crede,manchingal2026}, and splits total uncertainty into
+aleatoric and epistemic parts using upper and lower entropy~\cite{abellan2006}. It then
+calibrates the credal sets with conformal prediction, giving a distribution-free guarantee
+that the human label distribution is covered~\cite{javanmardi2024}. Finally, it applies
+imprecise-probability decision rules~\cite{troffaes2007} to output a single stance, a set
+of plausible stances, or a deferral to a human reviewer.
+
+The project collects \emph{no new annotations}. Human label distributions come from the
+publicly released raw annotator labels of SemEval-2016, with about eight independent
+annotators per tweet for 4,306 tweets~\cite{mohammad2016,mohammad2017}. From these we build
+three human-grounded evaluation settings: (i) an in-target test set, (ii) an
+\emph{unseen-target} test set, obtained by holding out an entire target during training,
+and (iii) an \emph{ambiguity} stress test of 1,385 low-agreement tweets that were excluded
+from the original shared task. ChaosNLI, which has about 100 annotators per item, serves as a
+further check of conformal coverage~\cite{nie2020}. We also evaluate zero-shot stance
+detection on VAST~\cite{allaway2020} and EZ-Stance~\cite{zhao2024}. Baselines are softmax,
+temperature scaling, Monte Carlo dropout, deep ensembles, evidential deep learning, conformal
+prediction and LLM confidence. We report calibration, selective-prediction risk,
+unseen-target detection, conformal coverage, and correlation between predicted aleatoric
+uncertainty and human disagreement. To our knowledge, this is the first application of credal
+uncertainty quantification to stance detection. It aims to make stance classification more
+trustworthy for content moderation, misinformation analysis and opinion mining.
+\end{abstract}
+
+\vspace{0.5em}
+\noindent Keywords: stance detection, uncertainty quantification, credal sets,
+imprecise probabilities, aleatoric and epistemic uncertainty, conformal prediction,
+zero-shot learning, human label variation, large language models.
+
+\begin{thebibliography}{99}
+\small
+
+\bibitem{mohammad2016}
+S.~M. Mohammad, S.~Kiritchenko, P.~Sobhani, X.~Zhu, and C.~Cherry.
+\newblock SemEval-2016 Task 6: Detecting stance in tweets.
+\newblock In \emph{Proceedings of SemEval}, 2016.
+
+\bibitem{mohammad2017}
+S.~M. Mohammad, P.~Sobhani, and S.~Kiritchenko.
+\newblock Stance and sentiment in tweets.
+\newblock \emph{ACM Transactions on Internet Technology}, 17(3), 2017.
+
+\bibitem{kucuk2020}
+D.~K{\"u}{\c{c}}{\"u}k and F.~Can.
+\newblock Stance detection: A survey.
+\newblock \emph{ACM Computing Surveys}, 53(1), 2020.
+
+\bibitem{allaway2020}
+E.~Allaway and K.~McKeown.
+\newblock Zero-shot stance detection: A dataset and model using generalized topic representations.
+\newblock In \emph{Proceedings of EMNLP}, 2020.
+
+\bibitem{zhao2024}
+C.~Zhao and C.~Caragea.
+\newblock EZ-STANCE: A large dataset for English zero-shot stance detection.
+\newblock In \emph{Proceedings of ACL}, 2024.
+
+\bibitem{walley1991}
+P.~Walley.
+\newblock \emph{Statistical Reasoning with Imprecise Probabilities}.
+\newblock Chapman \& Hall, 1991.
+
+\bibitem{abellan2006}
+J.~Abell{\'a}n, G.~J. Klir, and S.~Moral.
+\newblock Disaggregated total uncertainty measure for credal sets.
+\newblock \emph{International Journal of General Systems}, 35(1):29--44, 2006.
+
+\bibitem{hullermeier2021}
+E.~H{\"u}llermeier and W.~Waegeman.
+\newblock Aleatoric and epistemic uncertainty in machine learning: An introduction to concepts and methods.
+\newblock \emph{Machine Learning}, 110:457--506, 2021.
+
+\bibitem{troffaes2007}
+M.~C.~M. Troffaes.
+\newblock Decision making under uncertainty using imprecise probabilities.
+\newblock \emph{International Journal of Approximate Reasoning}, 45(1):17--29, 2007.
+
+\bibitem{wang2025wrapper}
+K.~Wang, F.~Cuzzolin, et~al.
+\newblock Credal wrapper of model averaging for uncertainty estimation in classification.
+\newblock In \emph{Proceedings of ICLR}, 2025.
+
+\bibitem{wang2024crede}
+K.~Wang, F.~Cuzzolin, S.~Kudukkil~Manchingal, K.~Shariatmadar, D.~Moens, and H.~Hallez.
+\newblock Credal deep ensembles for uncertainty quantification.
+\newblock In \emph{Advances in Neural Information Processing Systems (NeurIPS)}, 2024.
+
+\bibitem{javanmardi2024}
+A.~Javanmardi, D.~Stutz, and E.~H{\"u}llermeier.
+\newblock Conformalized credal set predictors.
+\newblock In \emph{Advances in Neural Information Processing Systems (NeurIPS)}, 2024.
+
+\bibitem{manchingal2026}
+S.~Kudukkil~Manchingal, S.~Nikolenko, and F.~Cuzzolin.
+\newblock Credal large language models for semantic commitment under uncertainty.
+\newblock \emph{arXiv preprint arXiv:2608.23244}, 2026.
+
+\bibitem{nie2020}
+Y.~Nie, X.~Zhou, and M.~Bansal.
+\newblock What can we learn from collective human opinions on natural language inference data?
+\newblock In \emph{Proceedings of EMNLP}, 2020.
+
+\bibitem{plank2022}
+B.~Plank.
+\newblock The ``problem'' of human label variation: On ground truth in data, modeling and evaluation.
+\newblock In \emph{Proceedings of EMNLP}, 2022.
+
+\end{thebibliography}
+
+\end{document}
+
+

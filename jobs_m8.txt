@@ -1,0 +1,40 @@
+python3 credistance/train.py --method soft --seed 0 --bootstrap 0.8 --out runs/intarget/soft_s0
+python3 credistance/train.py --method dro --seed 0 --delta 0.500 --bootstrap 0.8 --out runs/intarget/dro_s0
+python3 credistance/train.py --method softdro --seed 0 --delta 0.500 --bootstrap 0.8 --out runs/intarget/softdro_s0
+python3 credistance/train.py --method crenet --seed 0 --delta 0.5 --bootstrap 0.8 --out runs/intarget/crenet_s0
+python3 credistance/train.py --method ce --seed 1 --bootstrap 0.8 --out runs/intarget/ce_s1
+python3 credistance/train.py --method soft --seed 1 --bootstrap 0.8 --out runs/intarget/soft_s1
+python3 credistance/train.py --method dro --seed 1 --delta 0.571 --bootstrap 0.8 --out runs/intarget/dro_s1
+python3 credistance/train.py --method softdro --seed 1 --delta 0.571 --bootstrap 0.8 --out runs/intarget/softdro_s1
+python3 credistance/train.py --method crenet --seed 1 --delta 0.5 --bootstrap 0.8 --out runs/intarget/crenet_s1
+python3 credistance/train.py --method ce --seed 2 --bootstrap 0.8 --out runs/intarget/ce_s2
+python3 credistance/train.py --method soft --seed 2 --bootstrap 0.8 --out runs/intarget/soft_s2
+python3 credistance/train.py --method dro --seed 2 --delta 0.643 --bootstrap 0.8 --out runs/intarget/dro_s2
+python3 credistance/train.py --method softdro --seed 2 --delta 0.643 --bootstrap 0.8 --out runs/intarget/softdro_s2
+python3 credistance/train.py --method crenet --seed 2 --delta 0.5 --bootstrap 0.8 --out runs/intarget/crenet_s2
+python3 credistance/train.py --method ce --seed 3 --bootstrap 0.8 --out runs/intarget/ce_s3
+python3 credistance/train.py --method soft --seed 3 --bootstrap 0.8 --out runs/intarget/soft_s3
+python3 credistance/train.py --method dro --seed 3 --delta 0.714 --bootstrap 0.8 --out runs/intarget/dro_s3
+python3 credistance/train.py --method softdro --seed 3 --delta 0.714 --bootstrap 0.8 --out runs/intarget/softdro_s3
+python3 credistance/train.py --method crenet --seed 3 --delta 0.5 --bootstrap 0.8 --out runs/intarget/crenet_s3
+python3 credistance/train.py --method ce --seed 4 --bootstrap 0.8 --out runs/intarget/ce_s4
+python3 credistance/train.py --method soft --seed 4 --bootstrap 0.8 --out runs/intarget/soft_s4
+python3 credistance/train.py --method dro --seed 4 --delta 0.786 --bootstrap 0.8 --out runs/intarget/dro_s4
+python3 credistance/train.py --method softdro --seed 4 --delta 0.786 --bootstrap 0.8 --out runs/intarget/softdro_s4
+python3 credistance/train.py --method crenet --seed 4 --delta 0.5 --bootstrap 0.8 --out runs/intarget/crenet_s4
+python3 credistance/train.py --method ce --seed 5 --bootstrap 0.8 --out runs/intarget/ce_s5
+python3 credistance/train.py --method soft --seed 5 --bootstrap 0.8 --out runs/intarget/soft_s5
+python3 credistance/train.py --method dro --seed 5 --delta 0.857 --bootstrap 0.8 --out runs/intarget/dro_s5
+python3 credistance/train.py --method softdro --seed 5 --delta 0.857 --bootstrap 0.8 --out runs/intarget/softdro_s5
+python3 credistance/train.py --method crenet --seed 5 --delta 0.5 --bootstrap 0.8 --out runs/intarget/crenet_s5
+python3 credistance/train.py --method ce --seed 6 --bootstrap 0.8 --out runs/intarget/ce_s6
+python3 credistance/train.py --method soft --seed 6 --bootstrap 0.8 --out runs/intarget/soft_s6
+python3 credistance/train.py --method dro --seed 6 --delta 0.929 --bootstrap 0.8 --out runs/intarget/dro_s6
+python3 credistance/train.py --method softdro --seed 6 --delta 0.929 --bootstrap 0.8 --out runs/intarget/softdro_s6
+python3 credistance/train.py --method crenet --seed 6 --delta 0.5 --bootstrap 0.8 --out runs/intarget/crenet_s6
+python3 credistance/train.py --method ce --seed 7 --bootstrap 0.8 --out runs/intarget/ce_s7
+python3 credistance/train.py --method soft --seed 7 --bootstrap 0.8 --out runs/intarget/soft_s7
+python3 credistance/train.py --method dro --seed 7 --delta 1.000 --bootstrap 0.8 --out runs/intarget/dro_s7
+python3 credistance/train.py --method softdro --seed 7 --delta 1.000 --bootstrap 0.8 --out runs/intarget/softdro_s7
+python3 credistance/train.py --method crenet --seed 7 --delta 0.5 --bootstrap 0.8 --out runs/intarget/crenet_s7
+python3 credistance/train.py --method edl --seed 0 --out runs/intarget/edl_s0
